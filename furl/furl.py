@@ -13,6 +13,7 @@
 import re
 import abc
 import warnings
+from copy import deepcopy
 from posixpath import normpath
 
 import six
@@ -629,10 +630,7 @@ class Path(object):
         return not self.isdir
 
     def __truediv__(self, path):
-        copy = self.__class__(
-            path=self.segments,
-            force_absolute=self._force_absolute,
-            strict=self.strict)
+        copy = deepcopy(self)
         return copy.add(path)
 
     def __eq__(self, other):
@@ -987,7 +985,7 @@ class Query(object):
 
         Until furl v0.4.6, the 'delimiter' argument was incorrectly
         spelled 'delimeter'. For backwards compatibility, accept both
-        the correct 'delimiter' and the old, mispelled 'delimeter'.
+        the correct 'delimiter' and the old, misspelled 'delimeter'.
 
         Keys and values are encoded application/x-www-form-urlencoded if
         <quote_plus> is True, percent-encoded otherwise.
